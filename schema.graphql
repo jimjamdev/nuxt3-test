@@ -5,9 +5,30 @@ schema {
 }
 
 type Query {
+    countries(filter: countries_filter, limit: Int, offset: Int, page: Int, search: String, sort: [String]): [countries!]!
+    countries_aggregated(filter: countries_filter, groupBy: [String], limit: Int, search: String, sort: [String]): [countries_aggregated!]!
+    countries_by_id(id: ID!): countries
+    device_types(filter: device_types_filter, limit: Int, offset: Int, page: Int, search: String, sort: [String]): [device_types!]!
+    device_types_aggregated(filter: device_types_filter, groupBy: [String], limit: Int, search: String, sort: [String]): [device_types_aggregated!]!
+    device_types_by_id(id: ID!): device_types
     game(filter: game_filter, limit: Int, offset: Int, page: Int, search: String, sort: [String]): [game!]!
     game_aggregated(filter: game_filter, groupBy: [String], limit: Int, search: String, sort: [String]): [game_aggregated!]!
     game_by_id(id: ID!): game
+    game_categories(filter: game_categories_filter, limit: Int, offset: Int, page: Int, search: String, sort: [String]): [game_categories!]!
+    game_categories_aggregated(filter: game_categories_filter, groupBy: [String], limit: Int, search: String, sort: [String]): [game_categories_aggregated!]!
+    game_categories_by_id(id: ID!): game_categories
+    game_categories_translations(filter: game_categories_translations_filter, limit: Int, offset: Int, page: Int, search: String, sort: [String]): [game_categories_translations!]!
+    game_categories_translations_aggregated(filter: game_categories_translations_filter, groupBy: [String], limit: Int, search: String, sort: [String]): [game_categories_translations_aggregated!]!
+    game_categories_translations_by_id(id: ID!): game_categories_translations
+    game_countries(filter: game_countries_filter, limit: Int, offset: Int, page: Int, search: String, sort: [String]): [game_countries!]!
+    game_countries_aggregated(filter: game_countries_filter, groupBy: [String], limit: Int, search: String, sort: [String]): [game_countries_aggregated!]!
+    game_countries_by_id(id: ID!): game_countries
+    game_device_types(filter: game_device_types_filter, limit: Int, offset: Int, page: Int, search: String, sort: [String]): [game_device_types!]!
+    game_device_types_aggregated(filter: game_device_types_filter, groupBy: [String], limit: Int, search: String, sort: [String]): [game_device_types_aggregated!]!
+    game_device_types_by_id(id: ID!): game_device_types
+    game_providers(filter: game_providers_filter, limit: Int, offset: Int, page: Int, search: String, sort: [String]): [game_providers!]!
+    game_providers_aggregated(filter: game_providers_filter, groupBy: [String], limit: Int, search: String, sort: [String]): [game_providers_aggregated!]!
+    game_providers_by_id(id: ID!): game_providers
     game_translations(filter: game_translations_filter, limit: Int, offset: Int, page: Int, search: String, sort: [String]): [game_translations!]!
     game_translations_aggregated(filter: game_translations_filter, groupBy: [String], limit: Int, search: String, sort: [String]): [game_translations_aggregated!]!
     game_translations_by_id(id: ID!): game_translations
@@ -26,6 +47,35 @@ type count_functions {
     count: Int
 }
 
+type countries {
+    code: String
+    id: ID!
+    name: String
+}
+
+type countries_aggregated {
+    avg: countries_aggregated_fields
+    avgDistinct: countries_aggregated_fields
+    count: countries_aggregated_count
+    countAll: Int
+    countDistinct: countries_aggregated_count
+    group: JSON
+    max: countries_aggregated_fields
+    min: countries_aggregated_fields
+    sum: countries_aggregated_fields
+    sumDistinct: countries_aggregated_fields
+}
+
+type countries_aggregated_count {
+    code: Int
+    id: Int
+    name: Int
+}
+
+type countries_aggregated_fields {
+    id: Float
+}
+
 type datetime_functions {
     day: Int
     hour: Int
@@ -37,19 +87,84 @@ type datetime_functions {
     year: Int
 }
 
+type device_types {
+    device: String
+    id: ID!
+}
+
+type device_types_aggregated {
+    avg: device_types_aggregated_fields
+    avgDistinct: device_types_aggregated_fields
+    count: device_types_aggregated_count
+    countAll: Int
+    countDistinct: device_types_aggregated_count
+    group: JSON
+    max: device_types_aggregated_fields
+    min: device_types_aggregated_fields
+    sum: device_types_aggregated_fields
+    sumDistinct: device_types_aggregated_fields
+}
+
+type device_types_aggregated_count {
+    device: Int
+    id: Int
+}
+
+type device_types_aggregated_fields {
+    id: Float
+}
+
+type directus_files {
+    charset: String
+    description: String
+    duration: Int
+    embed: String
+    filename_disk: String
+    filename_download: String!
+    filesize: GraphQLBigInt
+    folder(filter: directus_folders_filter, limit: Int, offset: Int, page: Int, search: String, sort: [String]): directus_folders
+    height: Int
+    id: ID!
+    location: String
+    metadata: JSON
+    metadata_func: count_functions
+    modified_by: String
+    modified_on: Date
+    modified_on_func: datetime_functions
+    storage: String!
+    tags: JSON
+    tags_func: count_functions
+    title: String
+    type: String
+    uploaded_by: String
+    uploaded_on: Date
+    uploaded_on_func: datetime_functions
+    width: Int
+}
+
+type directus_folders {
+    id: ID!
+    name: String!
+    parent(filter: directus_folders_filter, limit: Int, offset: Int, page: Int, search: String, sort: [String]): directus_folders
+}
+
 type game {
-    category: Int
+    category(filter: game_categories_filter, limit: Int, offset: Int, page: Int, search: String, sort: [String]): game_categories
     date_created: Date
     date_created_func: datetime_functions
     date_updated: Date
     date_updated_func: datetime_functions
+    devices(filter: game_device_types_filter, limit: Int, offset: Int, page: Int, search: String, sort: [String]): [game_device_types]
+    devices_func: count_functions
+    excluded_countries(filter: game_countries_filter, limit: Int, offset: Int, page: Int, search: String, sort: [String]): [game_countries]
+    excluded_countries_func: count_functions
     gameID: String
     game_translations(filter: game_translations_filter, limit: Int, offset: Int, page: Int, search: String, sort: [String]): [game_translations]
     game_translations_func: count_functions
-    header_image: String
+    header_image(filter: directus_files_filter, limit: Int, offset: Int, page: Int, search: String, sort: [String]): directus_files
     id: ID!
     name: String
-    provider: Int
+    provider(filter: game_providers_filter, limit: Int, offset: Int, page: Int, search: String, sort: [String]): game_providers
     release_date: Date
     release_date_func: datetime_functions
     slug: String
@@ -76,6 +191,8 @@ type game_aggregated_count {
     category: Int
     date_created: Int
     date_updated: Int
+    devices: Int
+    excluded_countries: Int
     gameID: Int
     game_translations: Int
     header_image: Int
@@ -97,6 +214,189 @@ type game_aggregated_fields {
     sort: Float
 }
 
+type game_categories {
+    date_created: Date
+    date_created_func: datetime_functions
+    date_updated: Date
+    date_updated_func: datetime_functions
+    game_category_translations(filter: game_categories_translations_filter, limit: Int, offset: Int, page: Int, search: String, sort: [String]): [game_categories_translations]
+    game_category_translations_func: count_functions
+    id: ID!
+    sort: Int
+    status: String
+    user_created: String
+    user_updated: String
+}
+
+type game_categories_aggregated {
+    avg: game_categories_aggregated_fields
+    avgDistinct: game_categories_aggregated_fields
+    count: game_categories_aggregated_count
+    countAll: Int
+    countDistinct: game_categories_aggregated_count
+    group: JSON
+    max: game_categories_aggregated_fields
+    min: game_categories_aggregated_fields
+    sum: game_categories_aggregated_fields
+    sumDistinct: game_categories_aggregated_fields
+}
+
+type game_categories_aggregated_count {
+    date_created: Int
+    date_updated: Int
+    game_category_translations: Int
+    id: Int
+    sort: Int
+    status: Int
+    user_created: Int
+    user_updated: Int
+}
+
+type game_categories_aggregated_fields {
+    id: Float
+    sort: Float
+}
+
+type game_categories_translations {
+    game_categories_id(filter: game_categories_filter, limit: Int, offset: Int, page: Int, search: String, sort: [String]): game_categories
+    id: ID!
+    languages_code(filter: languages_filter, limit: Int, offset: Int, page: Int, search: String, sort: [String]): languages
+    name: String
+}
+
+type game_categories_translations_aggregated {
+    avg: game_categories_translations_aggregated_fields
+    avgDistinct: game_categories_translations_aggregated_fields
+    count: game_categories_translations_aggregated_count
+    countAll: Int
+    countDistinct: game_categories_translations_aggregated_count
+    group: JSON
+    max: game_categories_translations_aggregated_fields
+    min: game_categories_translations_aggregated_fields
+    sum: game_categories_translations_aggregated_fields
+    sumDistinct: game_categories_translations_aggregated_fields
+}
+
+type game_categories_translations_aggregated_count {
+    game_categories_id: Int
+    id: Int
+    languages_code: Int
+    name: Int
+}
+
+type game_categories_translations_aggregated_fields {
+    game_categories_id: Float
+    id: Float
+}
+
+type game_countries {
+    countries_id(filter: countries_filter, limit: Int, offset: Int, page: Int, search: String, sort: [String]): countries
+    game_id(filter: game_filter, limit: Int, offset: Int, page: Int, search: String, sort: [String]): game
+    id: ID!
+}
+
+type game_countries_aggregated {
+    avg: game_countries_aggregated_fields
+    avgDistinct: game_countries_aggregated_fields
+    count: game_countries_aggregated_count
+    countAll: Int
+    countDistinct: game_countries_aggregated_count
+    group: JSON
+    max: game_countries_aggregated_fields
+    min: game_countries_aggregated_fields
+    sum: game_countries_aggregated_fields
+    sumDistinct: game_countries_aggregated_fields
+}
+
+type game_countries_aggregated_count {
+    countries_id: Int
+    game_id: Int
+    id: Int
+}
+
+type game_countries_aggregated_fields {
+    countries_id: Float
+    game_id: Float
+    id: Float
+}
+
+type game_device_types {
+    device_types_id(filter: device_types_filter, limit: Int, offset: Int, page: Int, search: String, sort: [String]): device_types
+    game_id(filter: game_filter, limit: Int, offset: Int, page: Int, search: String, sort: [String]): game
+    id: ID!
+}
+
+type game_device_types_aggregated {
+    avg: game_device_types_aggregated_fields
+    avgDistinct: game_device_types_aggregated_fields
+    count: game_device_types_aggregated_count
+    countAll: Int
+    countDistinct: game_device_types_aggregated_count
+    group: JSON
+    max: game_device_types_aggregated_fields
+    min: game_device_types_aggregated_fields
+    sum: game_device_types_aggregated_fields
+    sumDistinct: game_device_types_aggregated_fields
+}
+
+type game_device_types_aggregated_count {
+    device_types_id: Int
+    game_id: Int
+    id: Int
+}
+
+type game_device_types_aggregated_fields {
+    device_types_id: Float
+    game_id: Float
+    id: Float
+}
+
+type game_providers {
+    date_created: Date
+    date_created_func: datetime_functions
+    date_updated: Date
+    date_updated_func: datetime_functions
+    id: ID!
+    link: String
+    name: String
+    slug: String
+    sort: Int
+    status: String
+    user_created: String
+    user_updated: String
+}
+
+type game_providers_aggregated {
+    avg: game_providers_aggregated_fields
+    avgDistinct: game_providers_aggregated_fields
+    count: game_providers_aggregated_count
+    countAll: Int
+    countDistinct: game_providers_aggregated_count
+    group: JSON
+    max: game_providers_aggregated_fields
+    min: game_providers_aggregated_fields
+    sum: game_providers_aggregated_fields
+    sumDistinct: game_providers_aggregated_fields
+}
+
+type game_providers_aggregated_count {
+    date_created: Int
+    date_updated: Int
+    id: Int
+    link: Int
+    name: Int
+    slug: Int
+    sort: Int
+    status: Int
+    user_created: Int
+    user_updated: Int
+}
+
+type game_providers_aggregated_fields {
+    id: Float
+    sort: Float
+}
+
 type game_translations {
     body: String
     body_html: String
@@ -105,7 +405,7 @@ type game_translations {
     languages_code(filter: languages_filter, limit: Int, offset: Int, page: Int, search: String, sort: [String]): languages
     tags: JSON
     tags_func: count_functions
-    thumbnail: String
+    thumbnail(filter: directus_files_filter, limit: Int, offset: Int, page: Int, search: String, sort: [String]): directus_files
     title: String
 }
 
@@ -209,7 +509,7 @@ type page_aggregated_fields {
 type page_translations {
     Title: String
     body: String
-    header_image: String
+    header_image(filter: directus_files_filter, limit: Int, offset: Int, page: Int, search: String, sort: [String]): directus_files
     id: ID!
     languages_id(filter: languages_filter, limit: Int, offset: Int, page: Int, search: String, sort: [String]): languages
     page_id(filter: page_filter, limit: Int, offset: Int, page: Int, search: String, sort: [String]): page
@@ -247,6 +547,9 @@ type page_translations_aggregated_fields {
 "ISO8601 Date values"
 scalar Date
 
+"BigInt value"
+scalar GraphQLBigInt
+
 "A Float or a String"
 scalar GraphQLStringOrFloat
 
@@ -255,6 +558,14 @@ scalar JSON
 
 input count_function_filter_operators {
     count: number_filter_operators
+}
+
+input countries_filter {
+    _and: [countries_filter]
+    _or: [countries_filter]
+    code: string_filter_operators
+    id: number_filter_operators
+    name: string_filter_operators
 }
 
 input date_filter_operators {
@@ -283,23 +594,130 @@ input datetime_function_filter_operators {
     year: number_filter_operators
 }
 
-input game_filter {
-    _and: [game_filter]
-    _or: [game_filter]
-    category: number_filter_operators
+input device_types_filter {
+    _and: [device_types_filter]
+    _or: [device_types_filter]
+    device: string_filter_operators
+    id: number_filter_operators
+}
+
+input directus_files_filter {
+    _and: [directus_files_filter]
+    _or: [directus_files_filter]
+    charset: string_filter_operators
+    description: string_filter_operators
+    duration: number_filter_operators
+    embed: string_filter_operators
+    filename_disk: string_filter_operators
+    filename_download: string_filter_operators
+    filesize: number_filter_operators
+    folder: directus_folders_filter
+    height: number_filter_operators
+    id: string_filter_operators
+    location: string_filter_operators
+    metadata: string_filter_operators
+    metadata_func: count_function_filter_operators
+    modified_by: string_filter_operators
+    modified_on: date_filter_operators
+    modified_on_func: datetime_function_filter_operators
+    storage: string_filter_operators
+    tags: string_filter_operators
+    tags_func: count_function_filter_operators
+    title: string_filter_operators
+    type: string_filter_operators
+    uploaded_by: string_filter_operators
+    uploaded_on: date_filter_operators
+    uploaded_on_func: datetime_function_filter_operators
+    width: number_filter_operators
+}
+
+input directus_folders_filter {
+    _and: [directus_folders_filter]
+    _or: [directus_folders_filter]
+    id: string_filter_operators
+    name: string_filter_operators
+    parent: directus_folders_filter
+}
+
+input game_categories_filter {
+    _and: [game_categories_filter]
+    _or: [game_categories_filter]
     date_created: date_filter_operators
     date_created_func: datetime_function_filter_operators
     date_updated: date_filter_operators
     date_updated_func: datetime_function_filter_operators
+    game_category_translations: game_categories_translations_filter
+    game_category_translations_func: count_function_filter_operators
+    id: number_filter_operators
+    sort: number_filter_operators
+    status: string_filter_operators
+    user_created: string_filter_operators
+    user_updated: string_filter_operators
+}
+
+input game_categories_translations_filter {
+    _and: [game_categories_translations_filter]
+    _or: [game_categories_translations_filter]
+    game_categories_id: game_categories_filter
+    id: number_filter_operators
+    languages_code: languages_filter
+    name: string_filter_operators
+}
+
+input game_countries_filter {
+    _and: [game_countries_filter]
+    _or: [game_countries_filter]
+    countries_id: countries_filter
+    game_id: game_filter
+    id: number_filter_operators
+}
+
+input game_device_types_filter {
+    _and: [game_device_types_filter]
+    _or: [game_device_types_filter]
+    device_types_id: device_types_filter
+    game_id: game_filter
+    id: number_filter_operators
+}
+
+input game_filter {
+    _and: [game_filter]
+    _or: [game_filter]
+    category: game_categories_filter
+    date_created: date_filter_operators
+    date_created_func: datetime_function_filter_operators
+    date_updated: date_filter_operators
+    date_updated_func: datetime_function_filter_operators
+    devices: game_device_types_filter
+    devices_func: count_function_filter_operators
+    excluded_countries: game_countries_filter
+    excluded_countries_func: count_function_filter_operators
     gameID: string_filter_operators
     game_translations: game_translations_filter
     game_translations_func: count_function_filter_operators
-    header_image: string_filter_operators
+    header_image: directus_files_filter
     id: number_filter_operators
     name: string_filter_operators
-    provider: number_filter_operators
+    provider: game_providers_filter
     release_date: date_filter_operators
     release_date_func: datetime_function_filter_operators
+    slug: string_filter_operators
+    sort: number_filter_operators
+    status: string_filter_operators
+    user_created: string_filter_operators
+    user_updated: string_filter_operators
+}
+
+input game_providers_filter {
+    _and: [game_providers_filter]
+    _or: [game_providers_filter]
+    date_created: date_filter_operators
+    date_created_func: datetime_function_filter_operators
+    date_updated: date_filter_operators
+    date_updated_func: datetime_function_filter_operators
+    id: number_filter_operators
+    link: string_filter_operators
+    name: string_filter_operators
     slug: string_filter_operators
     sort: number_filter_operators
     status: string_filter_operators
@@ -317,7 +735,7 @@ input game_translations_filter {
     languages_code: languages_filter
     tags: string_filter_operators
     tags_func: count_function_filter_operators
-    thumbnail: string_filter_operators
+    thumbnail: directus_files_filter
     title: string_filter_operators
 }
 
@@ -368,7 +786,7 @@ input page_translations_filter {
     _and: [page_translations_filter]
     _or: [page_translations_filter]
     body: string_filter_operators
-    header_image: string_filter_operators
+    header_image: directus_files_filter
     id: number_filter_operators
     languages_id: languages_filter
     page_id: page_filter
