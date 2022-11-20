@@ -1,9 +1,18 @@
 import { defineNuxtConfig } from 'nuxt/config'
 export default defineNuxtConfig({
-    modules: ['@nuxtjs/apollo'],
+    imports: {
+        dirs: ['stores'],
+    },
+    modules: [
+        '@nuxtjs/apollo',
+        ['@pinia/nuxt', {
+            autoImports: ['defineStore', ['defineStore', 'acceptHMRUpdate']],
+        }],
+    ],
     build: {
         transpile: [
             'graphql',
+            '@pinia/nuxt'
         ],
     },
     app: {
@@ -19,7 +28,7 @@ export default defineNuxtConfig({
     apollo: {
         clients: {
             default: {
-                httpEndpoint: 'https://dh4bbs5t.directus.app/graphql'
+                httpEndpoint: 'https://dh4bbs5t.directus.app/graphql' // should pass via .env
             }
         },
     },

@@ -7,7 +7,7 @@
         <game-thumbnail :game="game" :width="50" :height="50" />
       </div>
       <div v-else-if="search&&filteredGames().length === 0">
-        <p>No games found</p>
+        <p>No games found for {{ search }}}</p>
       </div>
       <div v-else v-for="game in games.game" :key="game.id">
         <game-thumbnail :game="game" :width="50" :height="50" />
@@ -17,12 +17,11 @@
     <NuxtLink to="/">
       Back to home
     </NuxtLink>
+    <pre>{{ gamesStore }}</pre>
   </div>
 </template>
 
 <script lang="ts" setup>
-const store = useStore()
-console.warn('store', store)
 
 /** We get the initial data from our graphql backend */
 const query = gql`
@@ -42,13 +41,14 @@ const query = gql`
 const variables = { limit: 5 }
 const { data: games } = await useAsyncQuery(query, variables)
 
+/** test Pinia */
+/*const gamesStore = useGameStore();
+
 /* We can use the filtered data in our template */
 let search = ref();
 function filteredGames() {
   const gamesArray = games._value.game // for some reason we can't use games.game - thanks vue
   const searchValue = search.value ? search.value.toLowerCase() : undefined;
-  console.warn('search.value', search.value)
-  console.warn('games', 'search.value', search.value, JSON.stringify(gamesArray));
   return searchValue && gamesArray.filter(game => game.name.toLowerCase().includes(searchValue));
 }
 
