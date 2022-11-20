@@ -1,10 +1,21 @@
 import { defineNuxtConfig } from 'nuxt/config'
 export default defineNuxtConfig({
+    css: ['~/assets/styles/reset.scss',],
+    vite: {
+        css: {
+            preprocessorOptions: {
+                scss: {
+                    additionalData: `@import "@/assets/styles/theme/index.scss";`,
+                },
+            }
+        },
+    },
     imports: {
         dirs: ['stores'],
     },
     modules: [
         '@nuxtjs/apollo',
+        '@nuxt/image-edge',
         ['@pinia/nuxt', {
             autoImports: ['defineStore', ['defineStore', 'acceptHMRUpdate']],
         }],

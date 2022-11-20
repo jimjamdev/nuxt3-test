@@ -1,10 +1,11 @@
 <template>
-  <main>
-    Default layout
+  <DefaultLayout>
     <slot />
-  </main>
+  </DefaultLayout>
 </template>
-
-<style lang="postcss">
-@import "assets/global.css";
-</style>
+<script>
+import DefaultLayout from "../components/layouts/default/default-layout";
+export default {
+  components: {DefaultLayout}
+}
+</script>

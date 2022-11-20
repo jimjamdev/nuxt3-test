@@ -1,5 +1,5 @@
 <template>
-  <input name="name">
+  <input :name="name">
 </template>
 
 <script lang="ts" setup>

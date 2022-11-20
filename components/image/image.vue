@@ -1,5 +1,5 @@
 <template>
-    <img class="image" :alt="alt" :src="path + imageId + '/?format=' + format + '&width=' + width + '&height=' + height + '&fit=' + fit + '&quality=' + quality + '&download=true/' + name + '.' + format">
+    <img class="image" :alt="alt" :src="path + imageId + '/?format=' + format + '&width=' + width + '&height=' + height + '&fit=' + fit + '&quality=' + quality + '&download=true/' + name + '.' + format" :width="width" :height="height" loading="lazy">
 </template>
 
 <script lang="ts" setup>

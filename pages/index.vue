@@ -1,24 +1,16 @@
 <template>
-  <div>
-    <p>Content inside <code>default</code> layout</p>
     <input type="text" v-model="search" placeholder="Search games..." /> <pre>{{ search }}</pre>
-    <h2>Searched</h2>
+  <Grid>
       <div v-if="search&&filteredGames().length !== 0" v-for="game in filteredGames()" :key="game">
-        <game-thumbnail :game="game" :width="50" :height="50" />
+        <game-thumbnail :game="game" :width="214" :height="214" />
       </div>
       <div v-else-if="search&&filteredGames().length === 0">
         <p>No games found for {{ search }}}</p>
       </div>
       <div v-else v-for="game in games.game" :key="game.id">
-        <game-thumbnail :game="game" :width="50" :height="50" />
+        <game-thumbnail :game="game" :width="214" :height="214" />
       </div>
-    <Button disabled>Button</Button>
-    <br>
-    <NuxtLink to="/">
-      Back to home
-    </NuxtLink>
-    <pre>{{ gamesStore }}</pre>
-  </div>
+  </Grid>
 </template>
 
 <script lang="ts" setup>
@@ -29,6 +21,7 @@ const query = gql`
     game(limit: $limit) {
       id
       name
+      slug
       game_translations {
         title
         thumbnail {
@@ -38,10 +31,10 @@ const query = gql`
     }
   }
 `
-const variables = { limit: 5 }
+const variables = { limit: 10 }
 const { data: games } = await useAsyncQuery(query, variables)
 
-/** test Pinia */
+/** test Pinia - seems to be buggy */
 /*const gamesStore = useGameStore();
 
 /* We can use the filtered data in our template */
@@ -53,3 +46,21 @@ function filteredGames() {
 }
 
 </script>
+
+<style lang="scss" scoped>
+/** We need to create an input component, not here */
+  input {
+    width: 100%;
+    padding: 1rem;
+    border: 1px solid lightgray;
+    border-radius: 0.25rem;
+    outline: none;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: $bodyTextColor;
+    background-color: $bodyBackgroundColor;
+    background-clip: padding-box;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  }
+</style>

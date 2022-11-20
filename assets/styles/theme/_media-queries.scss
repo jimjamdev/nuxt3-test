@@ -1,0 +1,16 @@
+/** Here we create function for media queries */
+$md-breakpoint: 600px !default;
+$lg-breakpoint: 922px !default;
+
+@mixin mq ($breakpoint) {
+  @if $breakpoint == md {
+    @media only screen and (min-width: $md-breakpoint) {
+      @content;
+    }
+  }
+  @if $breakpoint == lg {
+    @media only screen and (min-width: $lg-breakpoint) {
+      @content;
+    }
+  }
+}
