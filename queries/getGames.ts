@@ -1,4 +1,7 @@
-/*
+/**
+ * Preferably great common functions for endpoints
+ */
+
 export const fetchGames = async ({ limit = 5}) => {
     const query = gql`
         query getGames($limit: Int!) {
@@ -11,13 +14,12 @@ export const fetchGames = async ({ limit = 5}) => {
         }
       }`
 
-    /!** Maybe we clean up our data here, any transforms etc *!/
-    /!** Or create common function transformGames(query) *!/
-    /!** Should this go to composables/queries? *!/
+    /** Maybe we clean up our data here, any transforms etc */
+    /** Or create common function transformGames(query) */
+    /** Should this go to composables/queries? */
     const data = {
         ...query,
     }
 
     return data
 };
-*/

@@ -4,7 +4,7 @@
     <input type="text" v-model="search" placeholder="Search games..." /> <pre>{{ search }}</pre>
     <ul>
       <li v-for="game in games.game" :key="game.id">
-        <game-thumbnail :name="game.name" />
+        <game-thumbnail :game="game" :width="50" :height="50" />
       </li>
       </ul>
     <h2>Searched</h2>
