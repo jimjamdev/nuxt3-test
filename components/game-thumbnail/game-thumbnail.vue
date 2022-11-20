@@ -1,6 +1,7 @@
 <template>
-  <div>
-    <slot />
+  <div style="background: tomato; padding: 0.1rem;">
+    <Image />
+    <label>{{ name }}</label>
   </div>
 </template>
 
