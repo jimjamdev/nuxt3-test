@@ -2,20 +2,13 @@
   <div>
     <p>Content inside <code>default</code> layout</p>
     <input type="text" v-model="search" placeholder="Search games..." /> <pre>{{ search }}</pre>
-    <ul>
-      <li v-for="game in games.game" :key="game.id">
-        <game-thumbnail :game="game" :width="50" :height="50" />
-      </li>
-      </ul>
     <h2>Searched</h2>
-<!--    <ul>
-    <li v-for="game in filteredGames()" :key="game">
-      {{ game.name }}
-    </li>
-      <li class="item error" v-if="search&&!filteredGames().length">
-        <div>No results found!</div>
-      </li>
-    </ul>-->
+      <div v-if="search&&filteredGames().length !== 0" v-for="game in filteredGames()" :key="game">
+        <game-thumbnail :game="game" :width="50" :height="50" />
+      </div>
+      <div v-else v-for="game in games.game" :key="game.id">
+        <game-thumbnail :game="game" :width="50" :height="50" />
+      </div>
     <Button disabled>Button</Button>
     <br>
     <NuxtLink to="/">
@@ -46,14 +39,14 @@ const query = gql`
 const variables = { limit: 5 }
 const { data: games } = await useAsyncQuery(query, variables)
 
-console.warn('games', JSON.stringify(games, null, 2))
-
 /* We can use the filtered data in our template */
 let search = ref();
-/*function filteredGames() {
-  const gamesArray = games._value.game
-  console.warn('games', JSON.stringify(gamesArray));
-  return gamesArray
-}*/
+function filteredGames() {
+  const gamesArray = games._value.game // for some reason we can't use games.game - thanks vue
+  const searchValue = search.value ? search.value.toLowerCase() : undefined;
+  console.warn('search.value', search.value)
+  console.warn('games', 'search.value', search.value, JSON.stringify(gamesArray));
+  return searchValue ? gamesArray.filter(game => game.name.toLowerCase().includes(searchValue)) : gamesArray;
+}
 
 </script>
