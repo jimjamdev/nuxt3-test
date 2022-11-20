@@ -1,9 +1,9 @@
 <template>
   <div>
     <p>Content inside <code>default</code> layout</p>
-    <Input name="search" />
+    <input type="text" @change="handleSearch" /> {{ search}}
     <ul>
-    <li v-for="game in games.game">
+    <li v-for="game in games.game" @keyup="handleSearch">
       {{ game.name }}
     </li>
     </ul>
@@ -16,7 +16,10 @@
 </template>
 
 <script lang="ts" setup>
-import Input from "~/components/input/input.vue";
+
+const handleSearch = (e: any) => {
+  console.log(e.target.value)
+}
 
 const query = gql`
   query getGames($limit: Int!) {
@@ -28,4 +31,5 @@ const query = gql`
 `
 const variables = { limit: 5 }
 const { data: games } = await useAsyncQuery(query, variables)
+
 </script>
