@@ -6,6 +6,9 @@
       <div v-if="search&&filteredGames().length !== 0" v-for="game in filteredGames()" :key="game">
         <game-thumbnail :game="game" :width="50" :height="50" />
       </div>
+      <div v-else-if="search&&filteredGames().length === 0">
+        <p>No games found</p>
+      </div>
       <div v-else v-for="game in games.game" :key="game.id">
         <game-thumbnail :game="game" :width="50" :height="50" />
       </div>
@@ -46,7 +49,7 @@ function filteredGames() {
   const searchValue = search.value ? search.value.toLowerCase() : undefined;
   console.warn('search.value', search.value)
   console.warn('games', 'search.value', search.value, JSON.stringify(gamesArray));
-  return searchValue ? gamesArray.filter(game => game.name.toLowerCase().includes(searchValue)) : gamesArray;
+  return searchValue && gamesArray.filter(game => game.name.toLowerCase().includes(searchValue));
 }
 
 </script>
