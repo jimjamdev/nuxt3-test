@@ -6,7 +6,7 @@
         <game-thumbnail :game="game" :width="214" :height="214" />
       </div>
       <div v-else-if="search&&filteredGames().length === 0">
-        <p>No games found for {{ search }}}</p>
+        <p class="error">No games found for {{ search }}}</p>
       </div>
       <!-- This is our default view, this has to be here for our default server side rendered content/speed/SEO -->
       <div v-else v-for="game in games.game" :key="game.id">
@@ -67,5 +67,8 @@ function filteredGames() {
     background-color: $bodyBackgroundColor;
     background-clip: padding-box;
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  }
+  .error {
+    color: red;
   }
 </style>

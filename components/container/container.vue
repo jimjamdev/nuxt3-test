@@ -14,6 +14,7 @@ defineProps({
 
 <style lang="scss" scoped>
   .container {
+    position: relative;
     max-width: 1000px;
     margin: 0 auto;
     padding: 0 1.5rem;

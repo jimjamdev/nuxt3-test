@@ -37,6 +37,6 @@ defineProps({
     default: 100,
   },
 })
-const path = "https://dh4bbs5t.directus.app/assets/"
+const path = "https://dh4bbs5t.directus.app/assets/" // should be from .env
 
 </script>
