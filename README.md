@@ -1,5 +1,7 @@
 # Vue Casino Experimental Test
 
+https://nuxt3-test-bice-six.vercel.app/
+
 ![screenshot](static/casino-screenshot.webp)
 ![performance](static/casino-performance.webp)
 
